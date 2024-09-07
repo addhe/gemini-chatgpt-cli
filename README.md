@@ -16,13 +16,13 @@ This Python script uses Google Gen AI Gemini to generate code and perform variou
 1. Clone the repository:
 
 ```
-git clone https://github.com/addhe/my-google-gemini-bot.git
+$git clone https://github.com/addhe/my-google-gemini-bot.git
 ```
 
 2. Create a virtual environment:
 
 ```
-python3 -m venv venv
+$python3 -m venv venv
 ```
 
 3. Activate the virtual environment:
@@ -48,19 +48,42 @@ https://makersuite.google.com/app/apikey
 2. Set the API key as an environment variable:
 
 ```
-export GOOGLE_GEMINI_API_KEY="YOUR_API_KEY"
+$export GOOGLE_GEMINI_API_KEY="YOUR_API_KEY"
 ```
 
 3. Run the Program:
 
 ```
-python3 gemini-bot.py
+$python3 gemini-bot.py
 ```
 
 3. Exit the Program:
 
 ```
 >exit()
+```
+
+**Using Docker and Dockerfile**
+
+*** Pre-Requisite ***
+1. Please make sure your Docker already exists
+2. Auth your account into docker registry
+
+*** Installation via Docker ***
+1. Build our docker google gemini bot
+```
+$docker build --tag gemini-bot:v1.0 .
+```
+
+2. Using it directly, you will need the API Key
+```
+$docker run -it --name {{container_name}} --env GOOGLE_GEMINI_API_KEY={{you_gemini_api_key}} gemini-bot:v1.0
+
+```
+
+```
+e.g.
+$docker run -it --name awan-chatgpt-test --env GOOGLE_GEMINI_API_KEY=ChangeMe-ToValidKey gemini-bot:v1.0
 ```
 
 **Troubleshooting**
