@@ -65,11 +65,11 @@ $python3 gemini-bot.py
 
 **Using Docker and Dockerfile**
 
-*** Pre-Requisite ***
+***Pre-Requisite***
 1. Please make sure your Docker already exists
 2. Auth your account into docker registry
 
-*** Installation via Docker ***
+***Installation via Docker***
 1. Build our docker google gemini bot
 ```
 $docker build --tag gemini-bot:v1.0 .
