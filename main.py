@@ -10,6 +10,7 @@ model = genai.GenerativeModel(GEMINI_MODEL_ID)
 chat = model.start_chat(history=[])
 
 def setup_gemini_api():
+    """Set up the Gemini API with the provided API key."""
     api_key = os.getenv("GOOGLE_GEMINI_API_KEY")
     if not api_key:
         raise ValueError("Missing GOOGLE Gemini API Key.")
@@ -17,6 +18,7 @@ def setup_gemini_api():
         genai.configure(api_key=api_key)
 
 def generate_content(prompt):
+    """Generate content based on the given prompt using Gemini API."""
     try:
         setup_gemini_api()
         response = chat.send_message(prompt)
@@ -29,7 +31,7 @@ def generate_content(prompt):
 
 
 def main():
-    """Main function."""
+    """Main function to run the Gemini chatbot."""
     welcoming_text = """
         Welcome to Gemini Text Generator made by (Awan),
         Happy chat and talk with your Gemini Ai Generative
@@ -38,10 +40,12 @@ def main():
         type 'exit()' to exit from program
     """
     print(welcoming_text)
+
+    # while loop to keep asking user input till quitting the program   
     while True:
         prompt = input("\n> ")
         if prompt == "exit()":
-            exit()
+            sys.exit()
         generate_content(prompt)
 
 if __name__ == "__main__":
