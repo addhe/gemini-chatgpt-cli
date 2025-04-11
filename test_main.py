@@ -59,5 +59,22 @@ class TestMain(unittest.TestCase):
         # Ensure sys.exit was called.
         mock_exit.assert_called_once()
 
+    @patch('sys.exit', side_effect=SystemExit)
+    @patch('builtins.input', side_effect=['exit()'])
+    def test_accepts_model_argument(self, mock_input, mock_exit):
+        """Test that main.py accepts a model argument from the CLI and initializes correctly."""
+        custom_model = "custom-model"
+        # Patch sys.argv to simulate command line argument
+        test_argv = ['main.py', custom_model]
+        with patch('sys.argv', test_argv):
+            with patch('main.genai.GenerativeModel') as mock_generative_model:
+                # Patch generate_content to avoid executing the actual loop.
+                with patch('main.generate_content'):
+                    with self.assertRaises(SystemExit):
+                        main.main()
+                # Ensure our custom model argument was used to initialize the model.
+                mock_generative_model.assert_called_once_with(custom_model)
+                mock_exit.assert_called_once()
+
 if __name__ == '__main__':
     unittest.main()
