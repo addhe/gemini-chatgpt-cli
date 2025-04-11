@@ -5,9 +5,9 @@ import argparse
 import time
 
 # Define the Gemini model ID as a constant
-GEMINI_MODEL_ID = "gemini-1.5-flash"
-model = genai.GenerativeModel(GEMINI_MODEL_ID)
-chat = model.start_chat(history=[])
+DEFAULT_GEMINI_MODEL_ID = "gemini-2.0-flash-thinking-exp-01-21"
+model = None
+chat = None
 
 def setup_gemini_api():
     """Set up the Gemini API with the provided API key."""
@@ -19,6 +19,7 @@ def setup_gemini_api():
 
 def generate_content(prompt):
     """Generate content based on the given prompt using Gemini API."""
+    global chat
     try:
         setup_gemini_api()
         response = chat.send_message(prompt)
@@ -32,11 +33,21 @@ def generate_content(prompt):
 
 def main():
     """Main function to run the Gemini chatbot."""
-    welcoming_text = """
+    global model, chat
+
+    parser = argparse.ArgumentParser(description="Gemini Chatbot with Model Selection")
+    parser.add_argument("model_name", nargs='?', default=DEFAULT_GEMINI_MODEL_ID, help="Specify the Gemini model name")
+    args = parser.parse_args()
+
+    model = genai.GenerativeModel(args.model_name)
+    chat = model.start_chat(history=[])
+
+    welcoming_text = f"""
         Welcome to Gemini Text Generator made by (Awan),
         Happy chat and talk with your Gemini Ai Generative
         (Addhe Warman Putra - Awan)
 
+        Using model: {args.model_name}
         type 'exit()' to exit from program
     """
     print(welcoming_text)
